@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Orbitron, Exo_2, Outfit } from 'next/font/google'
 import './globals.css'
+import ChatWidget from '@/components/ChatWidget'
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         {children}
+        <ChatWidget />
       </body>
     </html>
   )

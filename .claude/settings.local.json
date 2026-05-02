@@ -50,7 +50,10 @@
       "Bash(node -e \"require\\('sharp'\\); console.log\\('sharp ok'\\)\")",
       "Bash(node -e ' *)",
       "Bash(npx plugins *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "PowerShell($baseUrl = $env:N8N_BASE_URL; $apiKey = $env:N8N_API_KEY; Write-Host \"Base URL: $baseUrl\"; Write-Host \"API Key set: $\\($null -ne $apiKey -and $apiKey -ne ''\\)\")"
     ]
   }
 }

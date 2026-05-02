@@ -48,7 +48,9 @@
       "Bash(node -e \"require\\(''./node_modules/@types/three/package.json''\\)\")",
       "Bash(powershell -Command \"Stop-Process -Name node -Force -ErrorAction SilentlyContinue; Write-Host 'all node processes stopped'\")",
       "Bash(node -e \"require\\('sharp'\\); console.log\\('sharp ok'\\)\")",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(npx plugins *)",
+      "Bash(git add *)"
     ]
   }
 }

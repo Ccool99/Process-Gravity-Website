@@ -50,8 +50,8 @@ export default function Hero() {
             alt="Process Gravity"
             style={{
               display: 'block',
-              width: '95vw',
-              maxWidth: '1200px',
+              width: '75vw',
+              maxWidth: '900px',
               height: 'auto',
               margin: '0 auto',
             }}

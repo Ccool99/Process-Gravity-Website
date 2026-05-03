@@ -72,7 +72,7 @@ export default function Hero() {
         {/* Sub-headline */}
         <p
           id="hero-subheadline"
-          className="font-body font-light text-[19px] text-muted leading-[1.7] max-w-[580px] mx-auto px-6 mb-10"
+          className="font-body font-light text-xl text-white-text/80 mt-3 leading-[1.7] max-w-[580px] mx-auto px-6 mb-10"
         >
           We give service business owners their evenings and weekends back. Then we
           help them build the business they always believed was possible.

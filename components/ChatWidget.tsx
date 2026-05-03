@@ -100,6 +100,15 @@ export default function ChatWidget() {
     if (leadCaptureStage === 'asking_email') {
       setVisitorEmail(text)
       setLeadCaptureStage('captured')
+      // Append the full lead capture exchange so subsequent webhook calls have complete context
+      setConversationHistory(prev => [
+        ...prev,
+        { role: 'assistant', content: "Before I pull up the booking link — can I grab your first name so Chad or Dipak can personalise the follow-up?" },
+        { role: 'user', content: visitorName },
+        { role: 'assistant', content: `Thanks ${visitorName}! And the best email to reach you at?` },
+        { role: 'user', content: text },
+        { role: 'assistant', content: "Perfect. Here's the link to book a time that works for you — no pitch, just a conversation." },
+      ])
       setMessages(prev => [
         ...prev,
         {
@@ -122,8 +131,8 @@ export default function ChatWidget() {
         body: JSON.stringify({
           message: text,
           sessionId,
-          visitorName: leadCaptureStage === 'captured' ? visitorName : '',
-          visitorEmail: leadCaptureStage === 'captured' ? visitorEmail : '',
+          visitorName,
+          visitorEmail,
           conversationHistory,
         }),
       })

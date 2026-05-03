@@ -36,6 +36,8 @@ function formatMessage(text: string): string {
     .replace(/\n/g, '<br/>')
 }
 
+type LeadCaptureStage = 'none' | 'asking_name' | 'asking_email' | 'captured'
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
@@ -44,6 +46,10 @@ export default function ChatWidget() {
   const [sessionId, setSessionId] = useState('')
   const [conversationHistory, setConversationHistory] = useState<ConversationEntry[]>([])
   const [hasOpenedBefore, setHasOpenedBefore] = useState(false)
+  const [visitorName, setVisitorName] = useState('')
+  const [visitorEmail, setVisitorEmail] = useState('')
+  const [leadCaptureStage, setLeadCaptureStage] = useState<LeadCaptureStage>('none')
+  const pendingCalendlyUrl = useRef('')
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -75,6 +81,38 @@ export default function ChatWidget() {
 
     setMessages(prev => [...prev, { role: 'user', content: text, timestamp: new Date().toISOString() }])
     setInputValue('')
+
+    // Handle lead capture stages locally — no webhook call
+    if (leadCaptureStage === 'asking_name') {
+      setVisitorName(text)
+      setLeadCaptureStage('asking_email')
+      setMessages(prev => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: `Thanks ${text}! And the best email to reach you at?`,
+          timestamp: new Date().toISOString(),
+        },
+      ])
+      return
+    }
+
+    if (leadCaptureStage === 'asking_email') {
+      setVisitorEmail(text)
+      setLeadCaptureStage('captured')
+      setMessages(prev => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: "Perfect. Here's the link to book a time that works for you — no pitch, just a conversation.",
+          timestamp: new Date().toISOString(),
+          showBookingButton: true,
+          calendlyUrl: pendingCalendlyUrl.current,
+        },
+      ])
+      return
+    }
+
     setIsLoading(true)
 
     try {
@@ -84,24 +122,48 @@ export default function ChatWidget() {
         body: JSON.stringify({
           message: text,
           sessionId,
-          visitorName: '',
-          visitorEmail: '',
+          visitorName: leadCaptureStage === 'captured' ? visitorName : '',
+          visitorEmail: leadCaptureStage === 'captured' ? visitorEmail : '',
           conversationHistory,
         }),
       })
       if (!res.ok) throw new Error()
       const data = await res.json()
 
-      setMessages(prev => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: data.response,
-          timestamp: new Date().toISOString(),
-          showBookingButton: data.showBookingButton,
-          calendlyUrl: data.calendlyUrl,
-        },
-      ])
+      const triggerLeadCapture =
+        (data.intent === 'booking' || data.intent === 'escalation') &&
+        leadCaptureStage === 'none'
+
+      if (triggerLeadCapture) {
+        pendingCalendlyUrl.current = data.calendlyUrl ?? ''
+        setLeadCaptureStage('asking_name')
+        setMessages(prev => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: data.response,
+            timestamp: new Date().toISOString(),
+          },
+          {
+            role: 'assistant',
+            content:
+              "Before I pull up the booking link — can I grab your first name so Chad or Dipak can personalise the follow-up?",
+            timestamp: new Date().toISOString(),
+          },
+        ])
+      } else {
+        setMessages(prev => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: data.response,
+            timestamp: new Date().toISOString(),
+            showBookingButton: data.showBookingButton,
+            calendlyUrl: data.calendlyUrl,
+          },
+        ])
+      }
+
       if (data.conversationHistory) setConversationHistory(data.conversationHistory)
     } catch {
       setMessages(prev => [
@@ -116,7 +178,7 @@ export default function ChatWidget() {
     } finally {
       setIsLoading(false)
     }
-  }, [inputValue, isLoading, sessionId, conversationHistory])
+  }, [inputValue, isLoading, sessionId, conversationHistory, leadCaptureStage, visitorName, visitorEmail])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {

@@ -58,7 +58,8 @@
       "Bash(chmod +x *)",
       "Bash(git fetch *)",
       "Bash(git checkout *)",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(npx tsc *)"
     ]
   }
 }

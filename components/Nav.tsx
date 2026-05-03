@@ -20,7 +20,7 @@ export default function Nav() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
         {/* Logo */}
         <Image
           src="/Assets/Process-Gravity-Logo-Text-Only-No-Tagline.png"
@@ -28,7 +28,7 @@ export default function Nav() {
           width={0}
           height={0}
           sizes="200px"
-          style={{ height: '48px', width: 'auto' }}
+          style={{ height: '56px', width: 'auto' }}
           priority
         />
 

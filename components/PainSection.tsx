@@ -27,7 +27,7 @@ export default function PainSection() {
                 <h2 className="font-display text-[28px] md:text-[42px] lg:text-[52px] uppercase tracking-[0.08em] text-white-text leading-[1.15]">
                   {s.headline}
                 </h2>
-                <p className="font-body font-light text-muted mt-4 text-base leading-[1.7]">
+                <p className="font-body font-light font-medium text-white-text/75 mt-6 text-lg leading-[1.7]">
                   {s.body}
                 </p>
               </div>

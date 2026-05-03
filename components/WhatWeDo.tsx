@@ -37,16 +37,16 @@ export default function WhatWeDo() {
           {cards.map(({ title, body, Icon }) => (
             <div
               key={title}
-              className="group bg-glass border border-glass-border rounded-xl flex flex-col transition-all duration-300 hover:border-electric-blue hover:shadow-[0_0_40px_rgba(41,121,255,0.2)]"
-              style={{ padding: '28px' }}
+              className="group border border-glass-border rounded-xl flex flex-col transition-all duration-300 hover:border-electric-blue hover:shadow-[0_0_40px_rgba(41,121,255,0.2)]"
+              style={{ padding: '40px', background: 'rgba(255,255,255,0.07)' }}
               data-animate="glass-card"
             >
               {/* Icon */}
-              <div className="flex justify-center" style={{ marginBottom: '12px' }}>
+              <div className="flex justify-center" style={{ marginBottom: '16px' }}>
                 <Icon
-                  size={32}
+                  size={48}
                   color="#00aaff"
-                  style={{ filter: 'drop-shadow(0 0 8px rgba(0,170,255,0.5))' }}
+                  style={{ filter: 'drop-shadow(0 0 10px rgba(0,170,255,0.55))' }}
                 />
               </div>
 
@@ -59,7 +59,7 @@ export default function WhatWeDo() {
               </h3>
 
               {/* Body */}
-              <p className="font-body font-light text-muted leading-[1.7] text-base">
+              <p className="font-body font-light text-white-text/75 leading-[1.7] text-lg">
                 {body}
               </p>
             </div>

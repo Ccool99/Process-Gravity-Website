@@ -6,7 +6,7 @@ import Image from 'next/image'
 const WEBHOOK_URL = 'https://n8n.dipakkdutta.com/webhook/pg-chatbot'
 
 const OPENING_MESSAGE =
-  "Hey there — welcome to Process Gravity. I'm here to answer any questions you have about what we do and whether we might be a fit for your business. What's on your mind?"
+  "Hey there — welcome to Process Gravity. I'm here to answer any questions you have about what we do and whether we might be a fit for your business. What's your name?"
 
 interface Message {
   role: 'user' | 'assistant'
@@ -139,27 +139,50 @@ export default function ChatWidget() {
       if (!res.ok) throw new Error()
       const data = await res.json()
 
+      // Only trigger local lead capture if we don't already have name and email from N8N
+      const currentName = data.visitorName || visitorName
+      const currentEmail = data.visitorEmail || visitorEmail
+
       const triggerLeadCapture =
         (data.intent === 'booking' || data.intent === 'escalation') &&
-        leadCaptureStage === 'none'
+        leadCaptureStage === 'none' &&
+        !currentEmail
 
       if (triggerLeadCapture) {
         pendingCalendlyUrl.current = data.calendlyUrl ?? ''
-        setLeadCaptureStage('asking_name')
-        setMessages(prev => [
-          ...prev,
-          {
-            role: 'assistant',
-            content: data.response,
-            timestamp: new Date().toISOString(),
-          },
-          {
-            role: 'assistant',
-            content:
-              "Before I pull up the booking link — can I grab your first name so Chad or Dipak can personalise the follow-up?",
-            timestamp: new Date().toISOString(),
-          },
-        ])
+        // If we already have the name, skip to asking for email
+        if (currentName) {
+          setLeadCaptureStage('asking_email')
+          setMessages(prev => [
+            ...prev,
+            {
+              role: 'assistant',
+              content: data.response,
+              timestamp: new Date().toISOString(),
+            },
+            {
+              role: 'assistant',
+              content: `Thanks ${currentName}! What's the best email to reach you at so Chad or Dipak can follow up personally?`,
+              timestamp: new Date().toISOString(),
+            },
+          ])
+        } else {
+          setLeadCaptureStage('asking_name')
+          setMessages(prev => [
+            ...prev,
+            {
+              role: 'assistant',
+              content: data.response,
+              timestamp: new Date().toISOString(),
+            },
+            {
+              role: 'assistant',
+              content:
+                "Before I pull up the booking link — can I grab your first name so Chad or Dipak can personalise the follow-up?",
+              timestamp: new Date().toISOString(),
+            },
+          ])
+        }
       } else {
         setMessages(prev => [
           ...prev,
@@ -174,6 +197,9 @@ export default function ChatWidget() {
       }
 
       if (data.conversationHistory) setConversationHistory(data.conversationHistory)
+      // Update visitor name and email from N8N extraction if not already captured locally
+      if (data.visitorName && !visitorName) setVisitorName(data.visitorName)
+      if (data.visitorEmail && !visitorEmail) setVisitorEmail(data.visitorEmail)
     } catch {
       setMessages(prev => [
         ...prev,

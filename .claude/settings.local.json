@@ -65,7 +65,9 @@
       "Bash(Start-Sleep -Seconds 8)",
       "Bash(Get-Content \"C:\\\\Users\\\\chadz\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-chadz-OneDrive-Documents-Process-Gravity-process-gravity-website\\\\de2aa87b-596e-42a3-a1fb-d90937be63ff\\\\tasks\\\\b6ljya6mv.output\")",
       "Bash(gh pr *)",
-      "PowerShell(winget install *)"
+      "PowerShell(winget install *)",
+      "Bash(taskkill *)",
+      "PowerShell(Stop-Process *)"
     ]
   }
 }

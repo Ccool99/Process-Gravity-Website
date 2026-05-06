@@ -7,7 +7,7 @@ export default function ClosingCTA() {
         </h2>
 
         <a
-          href="https://cal.com/processgravity"
+          href="https://calendly.com/processgravity/30min"
           className="inline-block font-ui text-sm uppercase tracking-[0.1em] font-medium px-10 py-5 bg-gradient-to-r from-electric-blue to-sky-blue text-white rounded-[4px] hover:opacity-90 transition-opacity duration-200 mb-8"
         >
           BOOK YOUR FREE DISCOVERY CALL

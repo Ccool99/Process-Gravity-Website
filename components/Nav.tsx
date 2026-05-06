@@ -34,7 +34,9 @@ export default function Nav() {
 
         {/* CTA */}
         <a
-          href="#contact"
+          href="https://calendly.com/processgravity/30min"
+          target="_blank"
+          rel="noopener noreferrer"
           className="font-ui text-sm uppercase tracking-[0.12em] px-6 py-2.5 border border-electric-blue text-white-text hover:bg-[rgba(41,121,255,0.15)] transition-colors duration-200"
         >
           BOOK A FREE CALL

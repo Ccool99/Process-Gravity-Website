@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { Orbitron, Exo_2, Outfit } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import ChatWidget from '@/components/ChatWidget'
+import VoiceWidget from '@/components/VoiceWidget'
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -50,7 +52,41 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         {children}
+        <VoiceWidget />
         <ChatWidget />
+
+        {/* Vapi SDK — loads after page is interactive. Their default button is
+            hidden via CSS; our custom VoiceWidget calls vapiInstance directly. */}
+        <style>{`
+          /* Hide Vapi's default pill button — we use our own VoiceWidget instead */
+          .vapi-btn { display: none !important; }
+        `}</style>
+        <Script
+          id="vapi-sdk"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              var vapiInstance = null;
+              const assistant = "47633597-2470-4433-a6ad-ce4fd69f6df5";
+              const apiKey = "be8df4ac-02ea-45ee-9f38-40694c7edab8";
+              (function (d, t) {
+                var g = document.createElement(t), s = d.getElementsByTagName(t)[0];
+                g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+                g.defer = true;
+                g.async = true;
+                s.parentNode.insertBefore(g, s);
+                g.onload = function () {
+                  vapiInstance = window.vapiSDK.run({
+                    apiKey: apiKey,
+                    assistant: assistant,
+                    config: { position: "bottom-right", offset: "40px", width: "1px", height: "1px" },
+                  });
+                  window.vapiInstance = vapiInstance;
+                };
+              })(document, "script");
+            `,
+          }}
+        />
       </body>
     </html>
   )

@@ -67,7 +67,9 @@
       "Bash(gh pr *)",
       "PowerShell(winget install *)",
       "Bash(taskkill *)",
-      "PowerShell(Stop-Process *)"
+      "PowerShell(Stop-Process *)",
+      "Bash(Start-Process *)",
+      "PowerShell(Start-Process \"http://localhost:3000\")"
     ]
   }
 }

@@ -103,7 +103,7 @@ export default function ChatWidget() {
       // Append the full lead capture exchange so subsequent webhook calls have complete context
       setConversationHistory(prev => [
         ...prev,
-        { role: 'assistant', content: "Before I pull up the booking link — can I grab your first name so Chad or Dipak can personalise the follow-up?" },
+        { role: 'assistant', content: "Before I pull up the booking link — can I grab your first name so our team can personalise the follow-up?" },
         { role: 'user', content: visitorName },
         { role: 'assistant', content: `Thanks ${visitorName}! And the best email to reach you at?` },
         { role: 'user', content: text },
@@ -162,7 +162,7 @@ export default function ChatWidget() {
             },
             {
               role: 'assistant',
-              content: `Thanks ${currentName}! What's the best email to reach you at so Chad or Dipak can follow up personally?`,
+              content: `Thanks ${currentName}! What's the best email to reach you at so our team can follow up personally?`,
               timestamp: new Date().toISOString(),
             },
           ])
@@ -178,7 +178,7 @@ export default function ChatWidget() {
             {
               role: 'assistant',
               content:
-                "Before I pull up the booking link — can I grab your first name so Chad or Dipak can personalise the follow-up?",
+                "Before I pull up the booking link — can I grab your first name so our team can personalise the follow-up?",
               timestamp: new Date().toISOString(),
             },
           ])

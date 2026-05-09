@@ -153,6 +153,7 @@ export default function ChatWidget() {
       const claudeAlreadyAsksForEmail = data.response.toLowerCase().includes('email')
       const triggerLeadCapture =
         (data.intent === 'booking' || data.intent === 'escalation') &&
+        data.readyForEmail === true &&
         leadCaptureStage === 'none' &&
         !currentEmail &&
         !claudeAlreadyAsksForEmail

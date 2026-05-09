@@ -75,6 +75,13 @@ export default function ChatWidget() {
     return () => clearTimeout(t)
   }, [isOpen])
 
+  useEffect(() => {
+    if (!isLoading && isOpen) {
+      const t = setTimeout(() => inputRef.current?.focus(), 50)
+      return () => clearTimeout(t)
+    }
+  }, [isLoading, isOpen])
+
   const sendMessage = useCallback(async () => {
     const text = inputValue.trim()
     if (!text || isLoading) return

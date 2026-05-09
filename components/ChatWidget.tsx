@@ -150,10 +150,12 @@ export default function ChatWidget() {
       const currentName = data.visitorName || visitorName
       const currentEmail = data.visitorEmail || visitorEmail
 
+      const claudeAlreadyAsksForEmail = data.response.toLowerCase().includes('email')
       const triggerLeadCapture =
         (data.intent === 'booking' || data.intent === 'escalation') &&
         leadCaptureStage === 'none' &&
-        !currentEmail
+        !currentEmail &&
+        !claudeAlreadyAsksForEmail
 
       if (triggerLeadCapture) {
         pendingCalendlyUrl.current = data.calendlyUrl ?? ''

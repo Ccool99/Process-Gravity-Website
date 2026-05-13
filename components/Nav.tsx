@@ -14,7 +14,7 @@ export default function Nav() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`hidden md:block fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-[rgba(12,17,32,0.9)] backdrop-blur-[16px]'
           : 'bg-transparent'

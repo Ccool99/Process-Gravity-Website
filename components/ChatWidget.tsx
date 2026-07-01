@@ -210,13 +210,14 @@ export default function ChatWidget() {
       // Update visitor name and email from N8N extraction if not already captured locally
       if (data.visitorName && !visitorName) setVisitorName(data.visitorName)
       if (data.visitorEmail && !visitorEmail) setVisitorEmail(data.visitorEmail)
-    } catch {
+    } catch (err) {
+      console.error('[ChatWidget] webhook error:', err)
       setMessages(prev => [
         ...prev,
         {
           role: 'assistant',
           content:
-            "I'm having trouble connecting right now. Please email us at hello@processgravity.com or try again in a moment.",
+            "I'm having trouble connecting right now. Please email us at info@processgravity.com or try again in a moment.",
           timestamp: new Date().toISOString(),
         },
       ])

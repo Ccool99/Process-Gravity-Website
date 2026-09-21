@@ -1,4 +1,4 @@
-const CALENDLY_URL = 'https://calendly.com/processgravity/30min'
+const CALENDLY_URL = 'https://calendly.com/hello-processgravity/30min'
 
 export default function Footer() {
   return (

@@ -69,7 +69,14 @@
       "Bash(taskkill *)",
       "PowerShell(Stop-Process *)",
       "Bash(Start-Process *)",
-      "PowerShell(Start-Process \"http://localhost:3000\")"
+      "PowerShell(Start-Process \"http://localhost:3000\")",
+      "Bash(vercel --version)",
+      "Bash(npm root *)",
+      "Bash(npm bin *)",
+      "Bash(npx --yes vercel --version)",
+      "Skill(claude-in-chrome)",
+      "Bash(npx vercel *)",
+      "mcp__claude-in-chrome__tabs_context_mcp"
     ]
   }
 }

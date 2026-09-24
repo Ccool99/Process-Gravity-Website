@@ -217,7 +217,7 @@ export default function ChatWidget() {
         {
           role: 'assistant',
           content:
-            "I'm having trouble connecting right now. Please email us at info@processgravity.com or try again in a moment.",
+            "I'm having trouble connecting right now. Please email us at hello@processgravity.com or try again in a moment.",
           timestamp: new Date().toISOString(),
         },
       ])

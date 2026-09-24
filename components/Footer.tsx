@@ -95,10 +95,10 @@ export default function Footer() {
                 Book a Free Call
               </a>
               <a
-                href="mailto:info@processgravity.com"
+                href="mailto:hello@processgravity.com"
                 className="font-body text-sm text-white-text/60 hover:text-white-text transition-colors duration-200"
               >
-                info@processgravity.com
+                hello@processgravity.com
               </a>
             </div>
           </div>
